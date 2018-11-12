@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Channy</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="choose">选择图片</string>
+    <string name="contentDes">图片描述</string>
+    <string name="save">保存图片</string>
+    <string name="pleaseChooseImage">请选择图片</string>
+    <string name="saveSuccess">保存图片成功</string>
+</resources>

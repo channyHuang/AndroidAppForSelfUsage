@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="User Settings"
+        android:key="title"/>
+    <CheckBoxPreference
+        android:key="screen"
+        android:title="Full Screen"
+        android:summary="show full screen"/>
+    <EditTextPreference
+        android:key="text"
+        android:title="Last time"
+        android:summary="LCD last time"
+        android:defaultValue="10"/>
+
+    <PreferenceCategory
+        android:title="Other Settings"
+        android:key="group2" />
+    <ListPreference
+        android:key="myList"
+        android:title="list"
+        android:summary="an example of lists"
+        android:dialogTitle="choose one"/>
+</PreferenceScreen>

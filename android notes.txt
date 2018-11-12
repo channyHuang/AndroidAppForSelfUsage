@@ -1,0 +1,16 @@
+http://blog.csdn.net/cnliwy/article/details/52189349
+
+
+build/envsetup.sh
+
+      - m: Makes from the top of the tree.
+      - mm: Builds all of the modules in the current directory.
+      - mmm: Builds all of the modules in the supplied directories.
+      - cgrep: Greps on all local C/C++ files.
+      - jgrep: Greps on all local Java files.
+      - resgrep: Greps on all local res/*.xml files.
+      - godir: Go to the directory containing a file.
+
+example: mmm framework
+
+

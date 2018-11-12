@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.channy.channy">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MusicActivity"
+            android:theme="@android:style/Theme.DeviceDefault"></activity>
+        <activity android:name=".MusicCutActivity"></activity>
+        <activity android:name=".PdfActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity android:name=".PdfViewActivity"></activity>
+        <activity android:name=".DatePickerActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light"></activity>
+        <activity android:name=".TrafficActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.DarkActionBar"></activity>
+        <activity android:name=".fileSelectActivity"></activity>
+        <activity android:name=".EventActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"></activity>
+        <activity android:name=".videoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"></activity>
+        <activity android:name=".photoActivity"
+            android:theme="@android:style/Theme.DeviceDefault"></activity>
+        <activity android:name=".testActivity"></activity>
+
+        <service android:name=".RecordService"></service>
+
+        <receiver android:name=".telReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".alarmReceiver"
+            android:process=":remote">
+        </receiver>
+    </application>
+
+    <!-- 监听电话状态权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <!-- 在SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- 刻入声音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+</manifest>
