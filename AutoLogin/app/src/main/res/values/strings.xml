@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AutoLogin</string>
+    <!--key-->
+    <string name="login_time_key">LoginTime</string>
+    <string name="logout_time_key">LogoutTime</string>
+    <string name="login_timepicker">loginTimePicker</string>
+    <string name="logout_timepicker">logoutTimePicker</string>
+    <string name="login_enable_key">enableLogin</string>
+    <string name="logout_enable_key">enableLogout</string>
+    <!--package name-->
+    <string name="WeChat_package">com.tencent.mm</string>
+    <!--WeChat id-->
+    <string name="WeChat_main">com.tencent.mm.ui.LauncherUI</string>
+    <string name="WeChat_mainList">com.tencent.mm:id/d08</string>
+    <string name="WeChat_miniPro">com.tencent.mm:id/d7v</string>
+</resources>

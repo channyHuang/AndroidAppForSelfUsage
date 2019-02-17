@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <PreferenceCategory
+        android:title="User Settings"
+        android:key="title"/>
+    <SwitchPreference
+        android:key="enableLogin"
+        android:title="Enable auto login"
+        android:summary="enable auto login" />
+    <com.example.autologin.TimePickerPreference
+        android:key="@string/login_timepicker"
+        android:title="Pick auto login time"
+        android:summary="auto login time" />
+    <SwitchPreference
+        android:key="enableLogout"
+        android:title="Enable auto logout"
+        android:summary="enable auto logout" />
+    <com.example.autologin.TimePickerPreference
+        android:key="@string/logout_timepicker"
+        android:title="Pick auto logout time"
+        android:summary="auto logout time" />
+</PreferenceScreen>
