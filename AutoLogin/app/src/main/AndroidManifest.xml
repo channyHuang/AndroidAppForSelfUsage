@@ -39,6 +39,10 @@
                 </action>
             </intent-filter>
         </receiver>
-        <receiver android:name=".AutoLoginReceiver"></receiver>
+        <receiver android:name=".AutoLoginReceiver">
+            <intent-filter>
+                <action android:name="AutoLoginReceiver.action"></action>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

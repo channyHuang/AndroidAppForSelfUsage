@@ -14,7 +14,9 @@ public class AutoLoginReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (startPackage(context, "com.tencent.mm")) {
+        Log.i("huang", "AutoLoginReceiver received");
+        
+        if (startPackage(context, context.getString(R.string.WeChat_package))) {
             Tools.getInstance().sendNotification(context, "AutoLoginReceiver", "start WeChat success");
         } else {
             Tools.getInstance().sendNotification(context, "AutoLoginReceiver", "start WeChat failed");

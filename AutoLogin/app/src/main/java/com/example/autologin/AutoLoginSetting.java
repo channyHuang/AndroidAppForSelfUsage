@@ -25,8 +25,8 @@ public class AutoLoginSetting extends PreferenceActivity implements Preference.O
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.layout.preference_setting);
 
-        loginSwitch = (SwitchPreference)findPreference("enableLogin");
-        logoutSwitch = (SwitchPreference)findPreference("enableLogout");
+        loginSwitch = (SwitchPreference)findPreference(getString(R.string.login_enable_key));
+        logoutSwitch = (SwitchPreference)findPreference(getString(R.string.logout_enable_key));
 
         loginSwitch.setOnPreferenceChangeListener(this);
         logoutSwitch.setOnPreferenceChangeListener(this);
@@ -50,7 +50,7 @@ public class AutoLoginSetting extends PreferenceActivity implements Preference.O
         //startAutoLoginService();
     }
 
-    private void startAutoLoginService() {
+    private void startAutoLoginService(boolean isLogin) {
         Intent intent = new Intent(this, AutoLoginService.class);
         intent.putExtra("isLogin", true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent);
@@ -60,42 +60,36 @@ public class AutoLoginSetting extends PreferenceActivity implements Preference.O
     private void stopAutoLoginService() {
         Intent intent = new Intent(this, AutoLoginService.class);
         intent.putExtra("isLogin", true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent);
-        else startService(intent);
+        stopService(intent);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Intent intent = new Intent(this, AutoLoginService.class);
         if (getString(R.string.login_enable_key).equals(preference.getKey())) {
-            intent.putExtra("isLogin", true);
             if ((boolean)newValue) {
                 loginSwitch.setChecked(true);
-                startAutoLoginService();
+                startAutoLoginService(true);
             } else {
                 loginSwitch.setChecked(false);
-                stopService(intent);
+                stopAutoLoginService();
             }
         }
         else if (getString(R.string.logout_enable_key).equals(preference.getKey())) {
-            intent.putExtra("isLogin", false);
             if ((boolean)newValue) {
                 logoutSwitch.setChecked(true);
-                startAutoLoginService();
+                startAutoLoginService(false);
             } else {
                 logoutSwitch.setChecked(false);
-                stopService(intent);
+                stopAutoLoginService();
             }
         }
         else if (getString(R.string.login_timepicker).equals(preference.getKey())) {
             if (!loginSwitch.isChecked()) return false;
-            intent.putExtra("isLogin", true);
-            startAutoLoginService();
+            startAutoLoginService(true);
         }
         else if (getString(R.string.logout_timepicker).equals(preference.getKey())) {
             if (!logoutSwitch.isChecked()) return false;
-            intent.putExtra("isLogin", false);
-            stopService(intent);
+            stopAutoLoginService();
         }
         return false;
     }

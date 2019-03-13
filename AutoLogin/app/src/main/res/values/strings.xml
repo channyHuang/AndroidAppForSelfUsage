@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AutoLogin</string>
+    <!--global-->
+    <string name="WeChat_Discover">Discover</string>
     <!--key-->
     <string name="login_time_key">LoginTime</string>
     <string name="logout_time_key">LogoutTime</string>
@@ -13,4 +15,9 @@
     <string name="WeChat_main">com.tencent.mm.ui.LauncherUI</string>
     <string name="WeChat_mainList">com.tencent.mm:id/d08</string>
     <string name="WeChat_miniPro">com.tencent.mm:id/d7v</string>
+
+    <string name="login_action">AutoLoginReceiver.action</string>
+
+    <string name="noti_serviceOff_title">AccessibilityService off</string>
+    <string name="noti_serviceOff_content">Please turn on AccessibilityService in Settings first</string>
 </resources>

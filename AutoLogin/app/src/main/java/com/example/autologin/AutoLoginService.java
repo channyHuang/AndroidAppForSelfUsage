@@ -1,21 +1,14 @@
 package com.example.autologin;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -34,7 +27,9 @@ import java.util.TimeZone;
 
 public class AutoLoginService extends AccessibilityService
 {
-    private enum AUTO_STEPS{
+    String TAG = AutoLoginService.class.getSimpleName();
+
+    public enum AUTO_STEPS {
         UNKNOW,
         WeChatMainPage,
         WeChatDisCover,
@@ -42,38 +37,30 @@ public class AutoLoginService extends AccessibilityService
         CompMainPage
     };
 
-    private AUTO_STEPS nStep = AUTO_STEPS.UNKNOW;
-
     int LoginCode = 1;
     int LogoutCode = 2;
-    String TAG = AutoLoginService.class.getSimpleName();
+
+    private AUTO_STEPS nStep = AUTO_STEPS.UNKNOW;
+
+    public void setStep(AUTO_STEPS step) {
+        nStep = step;
+    }
 
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
 
         if (!isAccessibilitySettingsOn(this)) {
-            /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle("Accessibility is off");
-            dialog.setMessage("Please turn on the Accessibility in Settings");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //
-                }
-            });
-            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    stopSelf();
-                }
-            });
-            dialog.show();*/
+            Tools.getInstance().sendNotification(this, getString(R.string.noti_serviceOff_title), getString(R.string.noti_serviceOff_content));
         };
         boolean isLogin = intent.getBooleanExtra("isLogin", false);
         startReminder(isLogin);
 
-        nStep = AUTO_STEPS.WeChatMainPage;
+        if (intent.getStringExtra("nStep") != null) {
+            nStep = AUTO_STEPS.WeChatMainPage;
+        } else {
+            nStep = AUTO_STEPS.UNKNOW;
+        }
     }
 
     @Override
@@ -155,7 +142,7 @@ public class AutoLoginService extends AccessibilityService
         }
         return infos;
     }
-    //find the id of which want to scroll or click
+    //find the id of which want to scroll or click, only for test
     //accessibilityAction: AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD(2000) etc
     private void outputId(AccessibilityNodeInfo info, String parentId, int accessibilityAction) {
         Log.i("huang","parent = " + parentId + ", childCount = " + info.getChildCount() + ", id = " + info.getViewIdResourceName()
@@ -218,12 +205,13 @@ public class AutoLoginService extends AccessibilityService
         }
 
         Intent intent = new Intent(this, AutoLoginReceiver.class);
+        intent.setAction(getString(R.string.login_action));
         PendingIntent pi = PendingIntent.getBroadcast(this, isLogin ? LoginCode : LogoutCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), (1000 * 60 * 60 * 24), pi);
 
-        Toast.makeText(this, "start reminder success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "start reminder success, time in " + curTime.getHours() + ":" + curTime.getMinutes(), Toast.LENGTH_SHORT).show();
 
         Notification notification = new NotificationCompat.Builder(this, createNotificationChannel(this))
                 .setAutoCancel(true)
@@ -235,7 +223,7 @@ public class AutoLoginService extends AccessibilityService
         Intent intents = new Intent(this, LoginResult.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intents, 0);
         notification.contentIntent = contentIntent;
-        startForeground(1, notification);
+        startForeground(isLogin ? LoginCode : LogoutCode, notification);
 
         Log.i(TAG, "start reminder in service, " + curTime.getHours() + ":" + curTime.getMinutes());
     }
